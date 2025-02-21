@@ -1,0 +1,5 @@
+sam_type: "sam2.1_hiera_small"
+box_threshold: 0.3
+text_threshold: 0.25
+clip_model_id: "openai/clip-vit-base-patch32"
+gdino_model_id: "IDEA-Research/grounding-dino-base"
