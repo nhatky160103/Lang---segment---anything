@@ -45,7 +45,7 @@ def generate_masks(data_path):
             mask = np.maximum(mask, rle)  # Hợp nhất mask
 
         # Lưu mask ra ảnh PNG
-        mask_filename = os.path.join(output_folder, f"{os.path.splitext(image_filename)[0]}_mask.png")
+        mask_filename = os.path.join(output_folder, image_filename)
         cv2.imwrite(mask_filename, mask)
 
     print(f"✅ Đã tạo {len(image_ids)} ảnh mask trong thư mục: {output_folder}")

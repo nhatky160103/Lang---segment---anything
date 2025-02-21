@@ -25,7 +25,13 @@ class GDINO:
         for i, prompt in enumerate(texts_prompt):
             if prompt[-1] != ".":
                 texts_prompt[i] += "."
-        inputs = self.processor(images=images_pil, text=texts_prompt, return_tensors="pt").to(self.model.device)
+        inputs = self.processor(
+        images=images_pil,
+        text=texts_prompt,
+        return_tensors="pt",
+        padding=True,     
+        truncation=True  
+    ).to(self.model.device)
         with torch.no_grad():
             outputs = self.model(**inputs)
         
@@ -45,18 +51,27 @@ class GDINO:
 if __name__ == "__main__":
     gdino = GDINO()
     gdino.build_model()
-    image_path = "assets3/images/109_png.rf.e5dfe826e8149b2bed37f64923691557.jpg"
+    image_path = "assets/images/18.jpg"
+
+    texts_prompt = [
+    "all people, human, person.",
+    "all advertised products, advertisement items, branded items, commercial objects, promotional products, drinks, food, electronics, vehicles, fashion items, cosmetic products."
+    ]
+
+
+
     out = gdino.predict(
-        [Image.open(image_path).convert("RGB")],
-        ["lips."],
+        [Image.open(image_path).convert("RGB"), Image.open(image_path).convert("RGB")],
+        texts_prompt,
         0.3,
         0.25,
     )
 
-    image = Image.open(image_path).convert("RGB")
-    draw_bboxes_cv2(image, out[0])
 
-    print(out)
+    for i, result in enumerate(out):
+        image = Image.open(image_path).convert("RGB")
+        draw_bboxes_cv2(image, result)
+
 
 
 
