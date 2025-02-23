@@ -4,8 +4,9 @@ import cv2
 
 from lang_sam.models.gdino import GDINO
 from lang_sam.models.sam import SAM
-from lang_sam.models.utils import DEVICE
 from lang_sam.models.clip import Clip
+from lang_sam.models.utils import DEVICE
+
 
 
 class LangSAM:

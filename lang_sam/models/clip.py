@@ -10,11 +10,11 @@ class Clip():
 
     def predict(self, image: Image):
         text_variants = [
-            ["real product", "drawing product"],
-            ["a realistic photo of a product", "a hand-drawn illustration of a product"],
-            ["a high-quality real-world photograph", "a sketch, painting, or digital artwork"],
-            ["a real-world product photo with natural lighting", "a cartoon, anime-style, or digital painting"],
-            ["a realistic photo captured by a camera", "a hand-drawn or computer-generated artwork"]
+            ["person.", "product."],
+            # ["a realistic photo of a product", "a hand-drawn illustration of a product"],
+            # ["a high-quality real-world photograph", "a sketch, painting, or digital artwork"],
+            # ["a real-world product photo with natural lighting", "a cartoon, anime-style, or digital painting"],
+            # ["a realistic photo captured by a camera", "a hand-drawn or computer-generated artwork"]
         ]
         
         best_result = None
@@ -35,9 +35,10 @@ class Clip():
     
 
 if __name__ == "__main__":
-        
-    class_id = Clip().predict(Image.open('assets/24.jpg'))
-
-    print(class_id)
+    import os
+    for image_name in os.listdir('cropped_objects'):
+        image_path = os.path.join('cropped_objects', image_name)
+        class_id = Clip().predict(Image.open(image_path))
+        print(class_id)
 
 

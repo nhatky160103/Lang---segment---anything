@@ -4,6 +4,7 @@ from transformers import AutoModelForZeroShotObjectDetection, AutoProcessor
 import cv2
 import numpy as np
 from .utils import draw_bboxes_cv2
+import os
 
 from lang_sam.models.utils import DEVICE
 
@@ -51,26 +52,27 @@ class GDINO:
 if __name__ == "__main__":
     gdino = GDINO()
     gdino.build_model()
-    image_path = "assets/images/18.jpg"
 
+
+
+    data_path = "assets/images"
     texts_prompt = [
-    "all people, human, person.",
-    "all advertised products, advertisement items, branded items, commercial objects, promotional products, drinks, food, electronics, vehicles, fashion items, cosmetic products."
-    ]
+        "product."
+        ]
 
+    for image_name in os.listdir(data_path):
+        image_path = os.path.join(data_path, image_name)
+        out = gdino.predict(
+            [Image.open(image_path).convert("RGB")],
+            texts_prompt,
+            0.4,
+            0.3,
+        )
+        image_name = image_name.split(".")[0]
 
-
-    out = gdino.predict(
-        [Image.open(image_path).convert("RGB"), Image.open(image_path).convert("RGB")],
-        texts_prompt,
-        0.3,
-        0.25,
-    )
-
-
-    for i, result in enumerate(out):
-        image = Image.open(image_path).convert("RGB")
-        draw_bboxes_cv2(image, result)
+        for i, result in enumerate(out):
+            image = Image.open(image_path).convert("RGB")
+            draw_bboxes_cv2(image, result, image_name= image_name, is_save=True, save_folder="cropped_objects", is_show= False)
 
 
 

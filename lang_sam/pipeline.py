@@ -11,7 +11,6 @@ from itertools import islice
 from lang_sam import LangSAM
 from lang_sam.utils import draw_image
 
-from lang_sam.utils import draw_image
 
 
 def load_config(file_path="lang_sam/config.yaml"):
@@ -116,7 +115,7 @@ class Pipeline():
 
 if __name__ == "__main__":
     
-    dataset_path = "./assets3"
+    dataset_path = "./assets"
     pipeline = Pipeline()
     text_promt = "product."
     pipeline.predict(text_promt, dataset_path, is_preview= True, check_photo= False, is_save= True)
